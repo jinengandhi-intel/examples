@@ -20,6 +20,10 @@ fs.mounts = [
   { uri = "file:{{ arch_libdir }}", path = "{{ arch_libdir }}" },
   { uri = "file:/usr/{{ arch_libdir }}", path = "/usr/{{ arch_libdir }}" },
   { uri = "file:{{ nodejs_dir }}/nodejs", path = "{{ nodejs_dir }}/nodejs" },
+
+  # Node.js fails on Debian12 as it cannot find files installed under /usr/share/nodejs (found on
+  # 18.x Node.js version, installed by apt). So adding the path to the manifest file.
+  { uri = "file:/usr/share/nodejs", path = "/usr/share/nodejs" },
 ]
 
 # Node.js expects around 1.7GB of heap on startup, see https://github.com/nodejs/node/issues/13018
@@ -35,4 +39,5 @@ sgx.trusted_files = [
   "file:{{ arch_libdir }}/",
   "file:/usr/{{ arch_libdir }}/",
   "file:helloworld.js",
+  "file:/usr/share/nodejs/",
 ]
